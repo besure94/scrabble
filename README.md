@@ -38,14 +38,14 @@
 #### 2 player game
   
 #### Build basic game board
-    * Grid that is 15 cells high and 15 cells wide.
-    * Horizontal cells go from A - O, left to right.
-    * Vertical cells go from 1 - 15, top to bottom.
-    * Certain cells will have score enhancements. There are 4 total:
-      * Triple word
-      * Double word
-      * Double letter
-      * Triple letter
+  * Grid that is 15 cells high and 15 cells wide.
+  * Horizontal cells go from A - O, left to right.
+  * Vertical cells go from 1 - 15, top to bottom.
+  * Certain cells will have score enhancements. There are 4 total:
+    * Triple word
+    * Double word
+    * Double letter
+    * Triple letter
   
 #### Logic to determine who goes first
   * Each player draws a tile.
@@ -54,22 +54,22 @@
   * Each initial drawn tile goes back into the tiles object (bag).
 
 #### Player turn logic
-    * Each player initially draws 7 tiles.
-    * Player can use up to 7 tiles for a turn.
-    * Player then replaces the amount of tiles they used from the bag.
+  * Each player initially draws 7 tiles.
+  * Player can use up to 7 tiles for a turn.
+  * Player then replaces the amount of tiles they used from the bag.
 
-    Player has three options for their turn:
-      1. Place a word.
-      2. Exchange tiles.
-      3. Pass.
+  Player has three options for their turn:
+    1. Place a word.
+    2. Exchange tiles.
+    3. Pass.
 
-    Exchange process:
-      * Can exchange one or all of their tiles.
-      * Turn ends after the exchange.
+  Exchange process:
+    * Can exchange one or all of their tiles.
+    * Turn ends after the exchange.
 
-    Pass process:
-      * Forfeits turn.
-      * 2 consecutive passes ends game, and the highest score wins.
+  Pass process:
+    * Forfeits turn.
+    * 2 consecutive passes ends game, and the highest score wins.
 
 #### First Word Score:
 
@@ -105,8 +105,7 @@
 
   * Have an array of valid words hard coded into app.
   * Array could have 100 words to start.
-    
-    
+
 #### Tile Bag and Point Values 
 
   * Store as object that contains 100 tiles.
@@ -153,6 +152,9 @@
 
 #### Score Modifying Tiles
 
+  * Have an object for the score modifying tiles.
+  * Object contains two nested objects, one for "double" and one for "triple".
+  * Each nested object has a key-value pair, one for "2" and one for "3".
   * Double letter: score value of tile(s), multiply by 2
   * Triple letter: score value of tile(s), multiply by 3
   * Double word: score value of word, multiply by 2
@@ -164,6 +166,14 @@
   * property for player's number of tiles
   * property for player turn
   * property for the first tile each player draws to determine who goes first
+  * property for player choice, since they can choose to place tiles, exchange, or pass
+
+### Stretch Goals
+
+* Expand game to allow 3 or 4 players.
+* Implement Wordnik API to validate Scrabble words.
+* CSS Animations
+* Build computer opponent.
   
   
 
