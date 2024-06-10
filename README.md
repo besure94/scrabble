@@ -1,4 +1,4 @@
-# Template Repository
+# Scrabble
 
 #### Use this template repository for starting new projects. Update with new technologies and packages when necessary.
 
@@ -36,7 +36,7 @@
 ### Outline for MVP
 
 #### 2 player game
-  
+
 #### Build basic game board
   * Grid that is 15 cells high and 15 cells wide.
   * Horizontal cells go from A - O, left to right.
@@ -46,7 +46,7 @@
     * Double word
     * Double letter
     * Triple letter
-  
+
 #### Logic to determine who goes first
   * Each player draws a tile.
   * Player with tile closest to "A" begins the game.
@@ -106,48 +106,48 @@
   * Have an array of valid words hard coded into app.
   * Array could have 100 words to start.
 
-#### Tile Bag and Point Values 
+#### Tile Bag and Point Values
 
   * Store as object that contains 100 tiles.
   * 98 will be letters with different point values.
   * 2 will be empty, which can take the place of any letter when placed by player.
-    
+
   Tiles will be distributed as:
     * 2 blank tiles (scoring 0 points)
-    * 1 point: 
-      - E ×12 
-      - A ×9 
-      - I ×9 
-      - O ×8 
+    * 1 point:
+      - E ×12
+      - A ×9
+      - I ×9
+      - O ×8
       - N ×6
       - R ×6
       - T ×6
       - L ×4
       - S ×4
       - U ×4
-    * 2 points: 
+    * 2 points:
       - D ×4
       - G ×3
-    * 3 points: 
-      - B ×2 
+    * 3 points:
+      - B ×2
       - C ×2
       - M ×2
       - P ×2
-    * 4 points: 
-      - F ×2 
+    * 4 points:
+      - F ×2
       - H ×2
       - V ×2
-      - W ×2 
+      - W ×2
       - Y ×2
-    * 5 points: 
+    * 5 points:
       - K ×1
-    * 8 points: 
+    * 8 points:
       - J ×1
       - X ×1
-    * 10 points: 
-      - Q ×1 
+    * 10 points:
+      - Q ×1
       - Z ×1
-      
+
   * Object will have a nested object for each letter. Each nested object will have key-value pairs for the quantity of each letter, and the point value of the letter.
 
 #### Score Modifying Tiles
@@ -159,7 +159,7 @@
   * Triple letter: score value of tile(s), multiply by 3
   * Double word: score value of word, multiply by 2
   * Triple word: score value of word, multiply by 3
-  
+
 #### Player Objects
 
   * have property for player's score
@@ -174,7 +174,7 @@
 * Implement Wordnik API to validate Scrabble words.
 * CSS Animations
 * Build computer opponent.
-  
-  
+
+
 
 
