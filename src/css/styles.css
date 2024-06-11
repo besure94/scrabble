@@ -1,0 +1,25 @@
+/* home page styling */
+.container {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* game board styling */
+.game-board {
+  display: grid;
+  grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
+  grid-template-rows: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
+  justify-content: center;
+}
+
+.box {
+  background-color: #d9d9d9;
+  border: 2px solid black;
+}
