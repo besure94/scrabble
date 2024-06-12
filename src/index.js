@@ -1,6 +1,7 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
+import Player from './js/game-classes/player';
 
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
@@ -12,6 +13,9 @@ window.addEventListener("load", function() {
   document.getElementById("playButton").addEventListener("click", function () {
     event.preventDefault();
     const playedWord = document.getElementById("playedWord").value;
-    console.log(playedWord);
+    const player1 = new Player(0, ['w', 'o', 'r', 'd', 'e', 'e', 'e'], true, '');
+    console.log(player1.score);
+    console.log(player1.scoreWord(playedWord));
+    console.log(player1.score);
   });
 });
