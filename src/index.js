@@ -9,4 +9,9 @@ window.addEventListener("load", function() {
     // need function that removes two tiles from tile-bag obj, compares both tiles to "A", and determines who plays first.
     // need form so that user can submit what word they want to play.
   });
+  document.getElementById("playButton").addEventListener("click", function () {
+    event.preventDefault();
+    const playedWord = document.getElementById("playedWord").value;
+    console.log(playedWord);
+  });
 });
