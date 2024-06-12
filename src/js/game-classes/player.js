@@ -47,6 +47,7 @@ export default class Player {
       default:
         this.score += 1;
       }
+      this.turn = false;
     });
   }
 }
