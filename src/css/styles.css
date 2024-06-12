@@ -23,3 +23,12 @@ h1 {
   background-color: #d9d9d9;
   border: 2px solid black;
 }
+
+.box:hover {
+  background-color: white;
+}
+
+#center-star {
+  font-weight: 900;
+  font-size: 2rem;
+}
