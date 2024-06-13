@@ -15,7 +15,7 @@ function determineTurnOrder() {
     player1Roll = Math.floor(Math.random() * 27);
     player2Roll = Math.floor(Math.random() * 27);
   }
-  if (player1Roll > player2Roll) {
+  if (player1Roll < player2Roll) {
     player1.turn = "true";
     player2.turn = "false";
     return "player1";
