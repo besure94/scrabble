@@ -32,3 +32,20 @@ h1 {
   font-weight: 900;
   font-size: 2rem;
 }
+
+/* player styling  */
+#player-one {
+  float: left;
+}
+
+#player-two {
+  float: right;
+}
+
+.tile {
+  display: grid;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid black;
+  justify-content: space-evenly;
+}

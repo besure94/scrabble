@@ -38,19 +38,59 @@ function createGameBoard() {
     gameBoard.appendChild(box);
     if (i === 112) {
       box.setAttribute("id", "center-star");
-      console.log(box);
       box.innerHTML = "*";
     }
   }
 }
 
-function playFirstWordOfGame() {
-  const playedWord = document.getElementById("playedWord").value;
-  let playedWordArray = playedWord.split('');
-  let firstLetter = playedWordArray[0];
-  let centerStar = document.getElementById("center-star");
-  centerStar.innerHTML = firstLetter;
+function createTilesArray() {
+  // variable containing tiles for testing purposes
+  const tilesArrayPlayer1 = ['a', 'p', 'r', 'i', 'c', 'o', 't'];
+  const tilesArrayPlayer2 = ['m', 'o', 'n', 'k', 'e', 'y', 's'];
+  console.log(tilesArrayPlayer1, tilesArrayPlayer2);
+  const player1TilesDiv = document.getElementById("player-one-tiles");
+  const player2TilesDiv = document.getElementById("player-two-tiles");
+  const tilesPerPlayer = 7;
+
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    let tile = document.createElement("div");
+    tile.setAttribute("class", "tile");
+    player1TilesDiv.appendChild(tile);
+    // player2TilesDiv.appendChild(tile);
+  }
+
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    let tile = document.createElement("div");
+    tile.setAttribute("class", "tile");
+    // player1TilesDiv.appendChild(tile);
+    player2TilesDiv.appendChild(tile);
+  }
+
+  console.log("Player 1 tiles: ", player1TilesDiv);
+  console.log("Player 2 tiles: ", player2TilesDiv);
+
 }
+
+function placeTilesOnBoard() {
+  determineTurnOrder();
+  const player1Div = document.getElementById("player-one");
+  const player2Div = document.getElementById("player-two");
+  if (player1.turn === "true") {
+    player2Div.setAttribute("class", "hidden");
+  } else if (player1.turn === "false") {
+    player1Div.setAttribute("class", "hidden");
+  }
+}
+
+placeTilesOnBoard();
+
+// function playFirstWordOfGame() {
+//   const playedWord = document.getElementById("playedWord").value;
+//   let playedWordArray = playedWord.split('');
+//   let firstLetter = playedWordArray[0];
+//   let centerStar = document.getElementById("center-star");
+//   centerStar.innerHTML = firstLetter;
+// }
 
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
@@ -58,14 +98,15 @@ window.addEventListener("load", function() {
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
     determineTurnOrder();
+    createTilesArray();
   });
-  document.getElementById("playButton").addEventListener("click", function (event) {
-    event.preventDefault();
-    playFirstWordOfGame();
-    const playedWord = document.getElementById("playedWord").value;
-    const player1 = new Player(0, ['w', 'o', 'r', 'd', 'e', 'e', 'e'], true, '');
-    console.log(player1.score);
-    console.log(player1.scoreWord(playedWord));
-    console.log(player1.score);
-  });
+  // document.getElementById("playButton").addEventListener("click", function (event) {
+  //   event.preventDefault();
+  //   // playFirstWordOfGame();
+  //   // const playedWord = document.getElementById("playedWord").value;
+  //   // const player1 = new Player(0, ['w', 'o', 'r', 'd', 'e', 'e', 'e'], true, '');
+  //   // console.log(player1.score);
+  //   // console.log(player1.scoreWord(playedWord));
+  //   // console.log(player1.score);
+  // });
 });
