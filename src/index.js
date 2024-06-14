@@ -1,12 +1,8 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-// import TileBag from './js/game-classes/tile-bag';
+import TileBag from './js/game-classes/tile-bag';
 import Player from './js/game-classes/player';
-
-// let tileBag = new TileBag();
-let player1 = new Player();
-let player2 = new Player();
 
 function determineTurnOrder() {
   let player1Roll = Math.floor(Math.random() * 27);
@@ -15,13 +11,13 @@ function determineTurnOrder() {
     player1Roll = Math.floor(Math.random() * 27);
     player2Roll = Math.floor(Math.random() * 27);
   }
-  if (player1Roll < player2Roll) {
-    player1.turn = "true";
-    player2.turn = "false";
+  if (player1Roll > player2Roll) {
+    // player1.turn = "true";
+    // player2.turn = "false";
     return "player1";
   } else {
-    player1.turn = "false";
-    player2.turn = "true";
+    // player1.turn = "false";
+    // player2.turn = "true";
     return "player2";
   }
 }
@@ -98,15 +94,18 @@ window.addEventListener("load", function() {
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
     determineTurnOrder();
-    createTilesArray();
+    let tileBag = new TileBag();
+    const player1 = new Player(0, [], true, '');
+    // const player2 = new Player();
+    player1.drawTiles(tileBag);
+    console.log(player1.tiles);
+    document.getElementById("playButton").addEventListener("click", function (event) {
+      event.preventDefault();
+      playFirstWordOfGame();
+      const playedWord = document.getElementById("playedWord").value;
+      // console.log(player1.score);
+      player1.scoreWord(playedWord);
+      console.log(player1.score);
+    });
   });
-  // document.getElementById("playButton").addEventListener("click", function (event) {
-  //   event.preventDefault();
-  //   // playFirstWordOfGame();
-  //   // const playedWord = document.getElementById("playedWord").value;
-  //   // const player1 = new Player(0, ['w', 'o', 'r', 'd', 'e', 'e', 'e'], true, '');
-  //   // console.log(player1.score);
-  //   // console.log(player1.scoreWord(playedWord));
-  //   // console.log(player1.score);
-  // });
 });
