@@ -47,6 +47,8 @@ function createTilesArray(playerOne, playerTwo) {
   for (let i = 0; i < tilesPerPlayer; i++) {
     let tile = document.createElement("div");
     tile.setAttribute("class", "tile");
+    tile.setAttribute("draggable", true);
+    tile.setAttribute("id", "tileSetA" + i);
     tile.innerHTML = playerOneCurrentTiles;
     player1TilesDiv.appendChild(tile);
   }
@@ -59,6 +61,8 @@ function createTilesArray(playerOne, playerTwo) {
   for (let i = 0; i < tilesPerPlayer; i++) {
     let tile = document.createElement("div");
     tile.setAttribute("class", "tile");
+    tile.setAttribute("draggable", true);
+    tile.setAttribute("id", "tileSetB" + i);
     player2TilesDiv.appendChild(tile);
   }
   console.log(player2TilesDiv);
@@ -75,21 +79,17 @@ function placeTilesOnBoard(playerTurn) {
   }
 }
 
-// function populateTiles(currentPlayer) {
-//   let currentTiles = currentPlayer.tiles;
-//   // console.log(currentDiv);
-//   // currentDiv.forEach(function(element, index) {
-//   //   element.append(currentTiles[index]);
-//   // });
-//   console.log(currentTiles);
-// }
+// trying to add functionality to drag a tile and place it on a cell in the board.
+
+function dragstartHandler(event) {
+  event.dataTransfer.setData("text/plain", event.target.id);
+}
 
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
     document.getElementById("start-game").setAttribute("class", "hidden");
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
-    // createTilesArray();
     let playerTurn = determineTurnOrder();
     placeTilesOnBoard(playerTurn);
     let tileBag = new TileBag();
@@ -97,8 +97,11 @@ window.addEventListener("load", function() {
     const player2 = new Player(0, [], '');
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
-    // populateTiles(player1);
     createTilesArray(player1, player2);
+    const tileA = document.getElementById("tileSetA0");
+    const tileB = document.getElementById("tileSetB0");
+    tileA.addEventListener("dragstart", dragstartHandler());
+    tileB.addEventListener("dragstart", dragstartHandler());
   });
 });
 
@@ -108,6 +111,15 @@ window.addEventListener("load", function() {
 //   let firstLetter = playedWordArray[0];
 //   let centerStar = document.getElementById("center-star");
 //   centerStar.innerHTML = firstLetter;
+// }
+
+// function populateTiles(currentPlayer) {
+//   let currentTiles = currentPlayer.tiles;
+//   // console.log(currentDiv);
+//   // currentDiv.forEach(function(element, index) {
+//   //   element.append(currentTiles[index]);
+//   // });
+//   console.log(currentTiles);
 // }
 
 // document.getElementById("playButton").addEventListener("click", function (event) {
