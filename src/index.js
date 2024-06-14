@@ -53,19 +53,34 @@ window.addEventListener("load", function() {
     document.getElementById("start-game").setAttribute("class", "hidden");
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
-    determineTurnOrder();
+    let currentTurn = determineTurnOrder();
     let tileBag = new TileBag();
     const player1 = new Player(0, [], true, '');
-    // const player2 = new Player();
-    player1.drawTiles(tileBag);
+    const player2 = new Player(0, [], true, '');
+    tileBag = player1.drawTiles(tileBag);
+    tileBag = player2.drawTiles(tileBag);
     console.log(player1.tiles);
+    console.log(player2.tiles);
+    console.log(currentTurn);
     document.getElementById("playButton").addEventListener("click", function (event) {
       event.preventDefault();
       playFirstWordOfGame();
       const playedWord = document.getElementById("playedWord").value;
-      // console.log(player1.score);
-      player1.scoreWord(playedWord);
+      if (currentTurn === "player1") {
+        player1.scoreWord(playedWord);
+        tileBag = player1.drawTiles(tileBag);
+        currentTurn = "player2";
+      }
+      else {
+        player2.scoreWord(playedWord);
+        tileBag = player2.drawTiles(tileBag);
+        currentTurn = "player1";
+      }
+
       console.log(player1.score);
+      console.log(player2.score);
+      console.log(player1.tiles);
+      console.log(player2.tiles);
     });
   });
 });
