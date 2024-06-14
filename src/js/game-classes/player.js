@@ -9,9 +9,15 @@ export default class Player {
   scoreWord(playedWord) {
     const word = playedWord.toLowerCase();
     const wordArray = word.split('');
+    const tiles = this.tiles.slice();
     wordArray.forEach(letter => {
       if (!this.tiles.includes(letter)) {
+        this.tiles = tiles.slice();
         throw new Error('not a valid word');
+      }
+      else {
+        const index = this.tiles.indexOf(letter);
+        this.tiles.splice(index, 1);
       }
     });
     wordArray.forEach(letter => {
@@ -49,5 +55,14 @@ export default class Player {
       }
       this.turn = false;
     });
+  }
+
+  drawTiles(tileBag) {
+    while (this.tiles.length < 7) {
+      const randomTileIndex = Math.floor(Math.random() * tileBag.tiles.length);
+      this.tiles.push(tileBag.tiles[randomTileIndex]);
+      tileBag.tiles.splice(randomTileIndex, 1);
+    }
+    return tileBag;
   }
 }
