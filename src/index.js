@@ -40,6 +40,27 @@ function createGameBoard() {
   }
 }
 
+function endGame(player1, player2) {
+  const subtractedPlayer1Score = player1.subtractRemainingLetters();
+  const subtractedPlayer2Score = player2.subtractRemainingLetters();
+  if (player1.tiles.length === 0) {
+    player1.score += subtractedPlayer2Score;
+  } else if (player2.tiles.length === 0) {
+    player2.score += subtractedPlayer1Score;
+  }
+  document.querySelector("form").remove();
+  document.getElementById("turn").setAttribute("class", "hidden");
+  if (player1.score > player2.score) {
+    document.getElementById("tiles").innerText = "Player 1 wins";
+  }
+  else if (player2.score > player1.score) {
+    document.getElementById("tiles").innerText = "Player 2 wins";
+  }
+  else {
+    document.getElementById("tiles").innerText = "Draw";
+  }
+}
+
 function playFirstWordOfGame() {
   const playedWord = document.getElementById("playedWord").value;
   let playedWordArray = playedWord.split('');
@@ -124,8 +145,7 @@ window.addEventListener("load", function() {
         currentTurn = "player1";
       }
       if (player1.choice === "pass" && player2.choice === "pass") {
-        document.getElementById("turn").innerText = 'Game Finished';
-        document.getElementById("tiles").innerText = '';
+        endGame(player1, player2);
       }
       else {
         document.getElementById("turn").innerText = `${currentTurn}'s turn`;

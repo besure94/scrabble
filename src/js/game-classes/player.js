@@ -60,6 +60,52 @@ export default class Player {
     this.turn = false;
   }
 
+  subtractRemainingLetters() {
+    let subtractedScore = 0;
+    this.tiles.forEach(letter => {
+      switch (letter) {
+      case 'd': 
+      case 'g':
+        this.score -= 2;
+        subtractedScore += 2;
+        break;
+      case 'b': 
+      case 'c':
+      case 'm':
+      case 'p':
+        this.score -= 3;
+        subtractedScore += 3;
+        break;
+      case 'f': 
+      case 'h': 
+      case 'v':
+      case 'w':
+      case 'y':
+        this.score -= 4;
+        subtractedScore += 4;
+        break;
+      case 'k':
+        this.score -= 5;
+        subtractedScore += 5;
+        break;
+      case 'j': 
+      case 'x':
+        this.score -= 8;
+        subtractedScore += 8;
+        break;
+      case 'q': 
+      case 'z':
+        this.score -= 10;
+        subtractedScore += 10;
+        break;
+      default:
+        this.score -= 1;
+        subtractedScore += 1;
+      }
+    });
+    return subtractedScore;
+  }
+
   exchangeWord(exchangedLetters) {
     const word = exchangedLetters.toLowerCase();
     const wordArray = word.split('');
