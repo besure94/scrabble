@@ -53,8 +53,21 @@ export default class Player {
       default:
         this.score += 1;
       }
-      this.turn = false;
     });
+    if (wordArray.length === 7) {
+      this.score += 50;
+    }
+    this.turn = false;
+  }
+
+  exchangeWord(exchangedLetters) {
+    const word = exchangedLetters.toLowerCase();
+    const wordArray = word.split('');
+    wordArray.forEach(letter => {
+      const index = this.tiles.indexOf(letter);
+      this.tiles.splice(index, 1);
+    });
+    this.turn = false;
   }
 
   drawTiles(tileBag) {

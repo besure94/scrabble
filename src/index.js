@@ -59,9 +59,13 @@ window.addEventListener("load", function() {
     const player2 = new Player(0, [], true, '');
     tileBag = player1.drawTiles(tileBag);
     tileBag = player2.drawTiles(tileBag);
-    console.log(player1.tiles);
-    console.log(player2.tiles);
-    console.log(currentTurn);
+    document.getElementById("turn").innerText = `${currentTurn}'s turn`;
+    if (currentTurn === "player1") {
+      document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
+    }
+    else {
+      document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
+    }
     document.getElementById("playButton").addEventListener("click", function (event) {
       event.preventDefault();
       playFirstWordOfGame();
@@ -76,11 +80,64 @@ window.addEventListener("load", function() {
         tileBag = player2.drawTiles(tileBag);
         currentTurn = "player1";
       }
-
+      document.getElementById("turn").innerText = `${currentTurn}'s turn`;
+      if (currentTurn === "player1") {
+        document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
+      }
+      else {
+        document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
+      }
       console.log(player1.score);
       console.log(player2.score);
-      console.log(player1.tiles);
-      console.log(player2.tiles);
+    });
+    document.getElementById("exchangeButton").addEventListener("click", function (event) {
+      event.preventDefault();
+      const playedWord = document.getElementById("playedWord").value;
+      if (currentTurn === "player1") {
+        player1.exchangeWord(playedWord);
+        tileBag = player1.drawTiles(tileBag);
+        currentTurn = "player2";
+      }
+      else {
+        player2.exchangeWord(playedWord);
+        tileBag = player2.drawTiles(tileBag);
+        currentTurn = "player1";
+      }
+      document.getElementById("turn").innerText = `${currentTurn}'s turn`;
+      if (currentTurn === "player1") {
+        document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
+      }
+      else {
+        document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
+      }
+      console.log(player1.score);
+      console.log(player2.score);
+    });
+    document.getElementById("passButton").addEventListener("click", function (event) {
+      event.preventDefault();
+      if (currentTurn === "player1") {
+        player1.choice = 'pass';
+        currentTurn = "player2";
+      }
+      else {
+        player2.choice = 'pass';
+        currentTurn = "player1";
+      }
+      if (player1.choice === "pass" && player2.choice === "pass") {
+        document.getElementById("turn").innerText = 'Game Finished';
+        document.getElementById("tiles").innerText = '';
+      }
+      else {
+        document.getElementById("turn").innerText = `${currentTurn}'s turn`;
+        if (currentTurn === "player1") {
+          document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
+        }
+        else {
+          document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
+        }
+      }
+      console.log(player1.score);
+      console.log(player2.score);
     });
   });
 });
