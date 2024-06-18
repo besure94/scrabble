@@ -50,6 +50,9 @@ export default class Player {
       case 'z':
         this.score += 10;
         break;
+      case ' ':
+        this.score += 0;
+        break;
       default:
         this.score += 1;
       }
@@ -118,6 +121,9 @@ export default class Player {
 
   drawTiles(tileBag) {
     while (this.tiles.length < 7) {
+      if (tileBag.tiles.length === 0) {
+        break;
+      }
       const randomTileIndex = Math.floor(Math.random() * tileBag.tiles.length);
       this.tiles.push(tileBag.tiles[randomTileIndex]);
       tileBag.tiles.splice(randomTileIndex, 1);

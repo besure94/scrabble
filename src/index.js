@@ -108,6 +108,9 @@ window.addEventListener("load", function() {
       else {
         document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
       }
+      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
+        endGame(player1, player2);
+      }
       console.log(player1.score);
       console.log(player2.score);
     });
