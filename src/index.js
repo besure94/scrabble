@@ -12,12 +12,8 @@ function determineTurnOrder() {
     player2Roll = Math.floor(Math.random() * 27);
   }
   if (player1Roll > player2Roll) {
-    // player1.turn = "true";
-    // player2.turn = "false";
     return "player1";
   } else {
-    // player1.turn = "false";
-    // player2.turn = "true";
     return "player2";
   }
 }
@@ -31,21 +27,77 @@ function createGameBoard() {
   for (let i = 0; i < totalBoxes; i++) {
     let box = document.createElement("div");
     box.setAttribute("class", "box");
-    gameBoard.appendChild(box);
+    box.setAttribute("droppable", true);
+    box.setAttribute("id", "box-" + i);
     if (i === 112) {
       box.setAttribute("id", "center-star");
-      console.log(box);
+      box.addEventListener("drop", dropTile);
+      box.addEventListener("dragover", allowTileDrop);
       box.innerHTML = "*";
     }
+    gameBoard.appendChild(box);
   }
 }
 
-function playFirstWordOfGame() {
-  const playedWord = document.getElementById("playedWord").value;
-  let playedWordArray = playedWord.split('');
-  let firstLetter = playedWordArray[0];
-  let centerStar = document.getElementById("center-star");
-  centerStar.innerHTML = firstLetter;
+function createTilesArray(playerOne, playerTwo) {
+  const player1TilesDiv = document.getElementById("player-one-tiles");
+  const player2TilesDiv = document.getElementById("player-two-tiles");
+  const tilesPerPlayer = 7;
+  let playerOneCurrentTiles = playerOne.tiles;
+  let playerTwoCurrentTiles = playerTwo.tiles;
+
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    let tile = document.createElement("div");
+    tile.setAttribute("class", "tile");
+    tile.setAttribute("draggable", true);
+    tile.setAttribute("ondragstart", dragTile);
+    tile.setAttribute("id", "tileSetA" + i);
+    tile.addEventListener("drop", dropTile);
+    tile.innerHTML = playerOneCurrentTiles;
+    player1TilesDiv.appendChild(tile);
+  }
+
+  for (let i = 0; i <= playerOneCurrentTiles; i++) {
+    document.getElementsByClassName("tile").innerHTML = playerOneCurrentTiles[i];
+  }
+  
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    let tile = document.createElement("div");
+    tile.setAttribute("class", "tile");
+    tile.setAttribute("draggable", true);
+    tile.setAttribute("ondragstart", dragTile);
+    tile.setAttribute("id", "tileSetB" + i);
+    tile.innerHTML = playerTwoCurrentTiles;
+    player2TilesDiv.appendChild(tile);
+  }
+
+}
+
+function placeTilesOnBoard(playerTurn) {
+  const player1Div = document.getElementById("player-one");
+  const player2Div = document.getElementById("player-two");
+  if (playerTurn === "player1") {
+    player2Div.setAttribute("class", "hidden");
+  } else if (playerTurn === "player2") {
+    player1Div.setAttribute("class", "hidden");
+  }
+}
+
+function dragTile(event) {
+  event.dataTransfer.setData("text", event.target.id);
+  event.dataTransfer.effectAllowed = "move";
+}
+
+function dropTile(event) {
+  event.preventDefault();
+  let data = event.dataTransfer.getData("text");
+  event.target.appendChild(document.getElementById(data));
+  event.target.innerHTML = document.getElementById(data).innerHTML;
+}
+
+function allowTileDrop(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
 }
 
 window.addEventListener("load", function() {
@@ -53,19 +105,17 @@ window.addEventListener("load", function() {
     document.getElementById("start-game").setAttribute("class", "hidden");
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
-    determineTurnOrder();
+    let playerTurn = determineTurnOrder();
+    placeTilesOnBoard(playerTurn);
     let tileBag = new TileBag();
-    const player1 = new Player(0, [], true, '');
-    // const player2 = new Player();
+    const player1 = new Player(0, [], '');
+    const player2 = new Player(0, [], '');
     player1.drawTiles(tileBag);
-    console.log(player1.tiles);
-    document.getElementById("playButton").addEventListener("click", function (event) {
-      event.preventDefault();
-      playFirstWordOfGame();
-      const playedWord = document.getElementById("playedWord").value;
-      // console.log(player1.score);
-      player1.scoreWord(playedWord);
-      console.log(player1.score);
-    });
+    player2.drawTiles(tileBag);
+    createTilesArray(player1, player2);
+    const tileA = document.getElementById("tileSetA0");
+    const tileB = document.getElementById("tileSetB0");
+    tileA.addEventListener("dragstart", dragTile);
+    tileB.addEventListener("dragstart", dragTile);
   });
 });

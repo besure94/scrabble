@@ -1,8 +1,7 @@
 export default class Player {
-  constructor(score, tiles, turn, choice) {
+  constructor(score, tiles, choice) {
     this.score = score,
     this.tiles = tiles,
-    this.turn = turn,
     this.choice = choice;
   }
 
