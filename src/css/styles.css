@@ -22,6 +22,8 @@ h1 {
 .box {
   background-color: #d9d9d9;
   border: 2px solid black;
+  font-size: 900;
+  font-size: 2rem;
 }
 
 .box:hover {
@@ -48,4 +50,6 @@ h1 {
   width: 2.5rem;
   border: 1px solid black;
   justify-content: space-evenly;
+  font-size: 900;
+  font-size: 1.5rem;
 }

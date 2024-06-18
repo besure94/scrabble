@@ -29,10 +29,10 @@ function createGameBoard() {
     box.setAttribute("class", "box");
     box.setAttribute("droppable", true);
     box.setAttribute("id", "box-" + i);
+    box.addEventListener("drop", dropTile);
+    box.addEventListener("dragover", allowTileDrop);
     if (i === 112) {
       box.setAttribute("id", "center-star");
-      box.addEventListener("drop", dropTile);
-      box.addEventListener("dragover", allowTileDrop);
       box.innerHTML = "*";
     }
     gameBoard.appendChild(box);
@@ -47,28 +47,21 @@ function createTilesArray(playerOne, playerTwo) {
   let playerTwoCurrentTiles = playerTwo.tiles;
 
   for (let i = 0; i < tilesPerPlayer; i++) {
-    let tile = document.createElement("div");
-    tile.setAttribute("class", "tile");
-    tile.setAttribute("draggable", true);
-    tile.setAttribute("ondragstart", dragTile);
-    tile.setAttribute("id", "tileSetA" + i);
-    tile.addEventListener("drop", dropTile);
-    tile.innerHTML = playerOneCurrentTiles;
-    player1TilesDiv.appendChild(tile);
-  }
+    let player1Tiles = document.createElement("div");
+    let player2Tiles = document.createElement("div");
+    player1Tiles.setAttribute("class", "tile");
+    player1Tiles.setAttribute("draggable", true);
+    player1Tiles.setAttribute("ondragstart", dragTile);
+    player1Tiles.setAttribute("id", "tileSetA" + i);
+    player1Tiles.innerHTML = playerOneCurrentTiles.pop();
+    player1TilesDiv.appendChild(player1Tiles);
 
-  for (let i = 0; i <= playerOneCurrentTiles; i++) {
-    document.getElementsByClassName("tile").innerHTML = playerOneCurrentTiles[i];
-  }
-  
-  for (let i = 0; i < tilesPerPlayer; i++) {
-    let tile = document.createElement("div");
-    tile.setAttribute("class", "tile");
-    tile.setAttribute("draggable", true);
-    tile.setAttribute("ondragstart", dragTile);
-    tile.setAttribute("id", "tileSetB" + i);
-    tile.innerHTML = playerTwoCurrentTiles;
-    player2TilesDiv.appendChild(tile);
+    player2Tiles.setAttribute("class", "tile");
+    player2Tiles.setAttribute("draggable", true);
+    player2Tiles.setAttribute("ondragstart", dragTile);
+    player2Tiles.setAttribute("id", "tileSetB" + i);
+    player2Tiles.innerHTML = playerTwoCurrentTiles.pop();
+    player2TilesDiv.appendChild(player2Tiles);
   }
 
 }
@@ -81,6 +74,13 @@ function placeTilesOnBoard(playerTurn) {
   } else if (playerTurn === "player2") {
     player1Div.setAttribute("class", "hidden");
   }
+}
+
+function makeTilesDraggable() {
+  let arrayOfTiles = Array.from(document.querySelectorAll("div.tile"));
+  arrayOfTiles.forEach(function(element) {
+    element.addEventListener("dragstart", dragTile);
+  });
 }
 
 function dragTile(event) {
@@ -113,9 +113,6 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
-    const tileA = document.getElementById("tileSetA0");
-    const tileB = document.getElementById("tileSetB0");
-    tileA.addEventListener("dragstart", dragTile);
-    tileB.addEventListener("dragstart", dragTile);
+    makeTilesDraggable();
   });
 });
