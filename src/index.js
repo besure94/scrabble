@@ -29,10 +29,10 @@ function createGameBoard() {
     box.setAttribute("class", "box");
     box.setAttribute("droppable", true);
     box.setAttribute("id", "box-" + i);
+    box.addEventListener("drop", dropTile);
+    box.addEventListener("dragover", allowTileDrop);
     if (i === 112) {
       box.setAttribute("id", "center-star");
-      box.addEventListener("drop", dropTile);
-      box.addEventListener("dragover", allowTileDrop);
       box.innerHTML = "*";
     }
     gameBoard.appendChild(box);
@@ -53,7 +53,6 @@ function createTilesArray(playerOne, playerTwo) {
     player1Tiles.setAttribute("draggable", true);
     player1Tiles.setAttribute("ondragstart", dragTile);
     player1Tiles.setAttribute("id", "tileSetA" + i);
-    player1Tiles.addEventListener("drop", dropTile);
     player1Tiles.innerHTML = playerOneCurrentTiles.pop();
     player1TilesDiv.appendChild(player1Tiles);
 
@@ -75,6 +74,13 @@ function placeTilesOnBoard(playerTurn) {
   } else if (playerTurn === "player2") {
     player1Div.setAttribute("class", "hidden");
   }
+}
+
+function makeTilesDraggable() {
+  let arrayOfTiles = Array.from(document.querySelectorAll("div.tile"));
+  arrayOfTiles.forEach(function(element) {
+    element.addEventListener("dragstart", dragTile);
+  });
 }
 
 function dragTile(event) {
@@ -107,9 +113,6 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
-    const tileA = document.getElementById("tileSetA0");
-    const tileB = document.getElementById("tileSetB0");
-    tileA.addEventListener("dragstart", dragTile);
-    tileB.addEventListener("dragstart", dragTile);
+    makeTilesDraggable();
   });
 });
