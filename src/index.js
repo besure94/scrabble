@@ -27,11 +27,15 @@ function createGameBoard() {
   for (let i = 0; i < totalBoxes; i++) {
     let box = document.createElement("div");
     box.setAttribute("class", "box");
-    gameBoard.appendChild(box);
+    box.setAttribute("droppable", true);
+    box.setAttribute("id", "box-" + i);
     if (i === 112) {
       box.setAttribute("id", "center-star");
+      box.addEventListener("drop", dropTile);
+      box.addEventListener("dragover", allowTileDrop);
       box.innerHTML = "*";
     }
+    gameBoard.appendChild(box);
   }
 }
 
@@ -41,18 +45,17 @@ function createTilesArray(playerOne, playerTwo) {
   const tilesPerPlayer = 7;
   let playerOneCurrentTiles = playerOne.tiles;
   let playerTwoCurrentTiles = playerTwo.tiles;
-  console.log(playerOneCurrentTiles);
-  console.log(playerTwoCurrentTiles);
 
   for (let i = 0; i < tilesPerPlayer; i++) {
     let tile = document.createElement("div");
     tile.setAttribute("class", "tile");
     tile.setAttribute("draggable", true);
+    tile.setAttribute("ondragstart", dragTile);
     tile.setAttribute("id", "tileSetA" + i);
+    tile.addEventListener("drop", dropTile);
     tile.innerHTML = playerOneCurrentTiles;
     player1TilesDiv.appendChild(tile);
   }
-  console.log(player1TilesDiv);
 
   for (let i = 0; i <= playerOneCurrentTiles; i++) {
     document.getElementsByClassName("tile").innerHTML = playerOneCurrentTiles[i];
@@ -62,10 +65,11 @@ function createTilesArray(playerOne, playerTwo) {
     let tile = document.createElement("div");
     tile.setAttribute("class", "tile");
     tile.setAttribute("draggable", true);
+    tile.setAttribute("ondragstart", dragTile);
     tile.setAttribute("id", "tileSetB" + i);
+    tile.innerHTML = playerTwoCurrentTiles;
     player2TilesDiv.appendChild(tile);
   }
-  console.log(player2TilesDiv);
 
 }
 
@@ -79,10 +83,21 @@ function placeTilesOnBoard(playerTurn) {
   }
 }
 
-// trying to add functionality to drag a tile and place it on a cell in the board.
+function dragTile(event) {
+  event.dataTransfer.setData("text", event.target.id);
+  event.dataTransfer.effectAllowed = "move";
+}
 
-function dragstartHandler(event) {
-  event.dataTransfer.setData("text/plain", event.target.id);
+function dropTile(event) {
+  event.preventDefault();
+  let data = event.dataTransfer.getData("text");
+  event.target.appendChild(document.getElementById(data));
+  event.target.innerHTML = document.getElementById(data).innerHTML;
+}
+
+function allowTileDrop(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
 }
 
 window.addEventListener("load", function() {
@@ -100,33 +115,7 @@ window.addEventListener("load", function() {
     createTilesArray(player1, player2);
     const tileA = document.getElementById("tileSetA0");
     const tileB = document.getElementById("tileSetB0");
-    tileA.addEventListener("dragstart", dragstartHandler());
-    tileB.addEventListener("dragstart", dragstartHandler());
+    tileA.addEventListener("dragstart", dragTile);
+    tileB.addEventListener("dragstart", dragTile);
   });
 });
-
-// function playFirstWordOfGame() {
-//   const playedWord = document.getElementById("playedWord").value;
-//   let playedWordArray = playedWord.split('');
-//   let firstLetter = playedWordArray[0];
-//   let centerStar = document.getElementById("center-star");
-//   centerStar.innerHTML = firstLetter;
-// }
-
-// function populateTiles(currentPlayer) {
-//   let currentTiles = currentPlayer.tiles;
-//   // console.log(currentDiv);
-//   // currentDiv.forEach(function(element, index) {
-//   //   element.append(currentTiles[index]);
-//   // });
-//   console.log(currentTiles);
-// }
-
-// document.getElementById("playButton").addEventListener("click", function (event) {
-//   event.preventDefault();
-//   // playFirstWordOfGame();
-//   const playedWord = document.getElementById("playedWord").value;
-//   // console.log(player1.score);
-//   player1.scoreWord(playedWord);
-//   console.log(player1.score);
-// });
