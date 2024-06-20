@@ -12,12 +12,8 @@ function determineTurnOrder() {
     player2Roll = Math.floor(Math.random() * 27);
   }
   if (player1Roll > player2Roll) {
-    // player1.turn = "true";
-    // player2.turn = "false";
     return "player1";
   } else {
-    // player1.turn = "false";
-    // player2.turn = "true";
     return "player2";
   }
 }
@@ -31,12 +27,15 @@ function createGameBoard() {
   for (let i = 0; i < totalBoxes; i++) {
     let box = document.createElement("div");
     box.setAttribute("class", "box");
-    gameBoard.appendChild(box);
+    box.setAttribute("droppable", true);
+    box.setAttribute("id", "box-" + i);
+    box.addEventListener("drop", dropTile);
+    box.addEventListener("dragover", allowTileDrop);
     if (i === 112) {
       box.setAttribute("id", "center-star");
-      console.log(box);
       box.innerHTML = "*";
     }
+    gameBoard.appendChild(box);
   }
 }
 
@@ -61,12 +60,65 @@ function endGame(player1, player2) {
   }
 }
 
-function playFirstWordOfGame() {
-  const playedWord = document.getElementById("playedWord").value;
-  let playedWordArray = playedWord.split('');
-  let firstLetter = playedWordArray[0];
-  let centerStar = document.getElementById("center-star");
-  centerStar.innerHTML = firstLetter;
+function createTilesArray(playerOne, playerTwo) {
+  const player1TilesDiv = document.getElementById("player-one-tiles");
+  const player2TilesDiv = document.getElementById("player-two-tiles");
+  const tilesPerPlayer = 7;
+  let playerOneCurrentTiles = playerOne.tiles;
+  let playerTwoCurrentTiles = playerTwo.tiles;
+
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    let player1Tiles = document.createElement("div");
+    let player2Tiles = document.createElement("div");
+    player1Tiles.setAttribute("class", "tile");
+    player1Tiles.setAttribute("draggable", true);
+    player1Tiles.setAttribute("ondragstart", dragTile);
+    player1Tiles.setAttribute("id", "tileSetA" + i);
+    player1Tiles.innerHTML = playerOneCurrentTiles.pop();
+    player1TilesDiv.appendChild(player1Tiles);
+
+    player2Tiles.setAttribute("class", "tile");
+    player2Tiles.setAttribute("draggable", true);
+    player2Tiles.setAttribute("ondragstart", dragTile);
+    player2Tiles.setAttribute("id", "tileSetB" + i);
+    player2Tiles.innerHTML = playerTwoCurrentTiles.pop();
+    player2TilesDiv.appendChild(player2Tiles);
+  }
+
+}
+
+function placeTilesOnBoard(playerTurn) {
+  const player1Div = document.getElementById("player-one");
+  const player2Div = document.getElementById("player-two");
+  if (playerTurn === "player1") {
+    player2Div.setAttribute("class", "hidden");
+  } else if (playerTurn === "player2") {
+    player1Div.setAttribute("class", "hidden");
+  }
+}
+
+function makeTilesDraggable() {
+  let arrayOfTiles = Array.from(document.querySelectorAll("div.tile"));
+  arrayOfTiles.forEach(function(element) {
+    element.addEventListener("dragstart", dragTile);
+  });
+}
+
+function dragTile(event) {
+  event.dataTransfer.setData("text", event.target.id);
+  event.dataTransfer.effectAllowed = "move";
+}
+
+function dropTile(event) {
+  event.preventDefault();
+  let data = event.dataTransfer.getData("text");
+  event.target.appendChild(document.getElementById(data));
+  event.target.innerHTML = document.getElementById(data).innerHTML;
+}
+
+function allowTileDrop(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
 }
 
 window.addEventListener("load", function() {
@@ -74,93 +126,14 @@ window.addEventListener("load", function() {
     document.getElementById("start-game").setAttribute("class", "hidden");
     document.getElementById("game-div").removeAttribute("class", "hidden");
     createGameBoard();
-    let currentTurn = determineTurnOrder();
+    let playerTurn = determineTurnOrder();
+    placeTilesOnBoard(playerTurn);
     let tileBag = new TileBag();
-    const player1 = new Player(0, [], true, '');
-    const player2 = new Player(0, [], true, '');
-    tileBag = player1.drawTiles(tileBag);
-    tileBag = player2.drawTiles(tileBag);
-    document.getElementById("turn").innerText = `${currentTurn}'s turn`;
-    if (currentTurn === "player1") {
-      document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
-    }
-    else {
-      document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
-    }
-    document.getElementById("playButton").addEventListener("click", function (event) {
-      event.preventDefault();
-      playFirstWordOfGame();
-      const playedWord = document.getElementById("playedWord").value;
-      if (currentTurn === "player1") {
-        player1.scoreWord(playedWord);
-        tileBag = player1.drawTiles(tileBag);
-        currentTurn = "player2";
-      }
-      else {
-        player2.scoreWord(playedWord);
-        tileBag = player2.drawTiles(tileBag);
-        currentTurn = "player1";
-      }
-      document.getElementById("turn").innerText = `${currentTurn}'s turn`;
-      if (currentTurn === "player1") {
-        document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
-      }
-      else {
-        document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
-      }
-      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
-        endGame(player1, player2);
-      }
-      console.log(player1.score);
-      console.log(player2.score);
-    });
-    document.getElementById("exchangeButton").addEventListener("click", function (event) {
-      event.preventDefault();
-      const playedWord = document.getElementById("playedWord").value;
-      if (currentTurn === "player1") {
-        player1.exchangeWord(playedWord);
-        tileBag = player1.drawTiles(tileBag);
-        currentTurn = "player2";
-      }
-      else {
-        player2.exchangeWord(playedWord);
-        tileBag = player2.drawTiles(tileBag);
-        currentTurn = "player1";
-      }
-      document.getElementById("turn").innerText = `${currentTurn}'s turn`;
-      if (currentTurn === "player1") {
-        document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
-      }
-      else {
-        document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
-      }
-      console.log(player1.score);
-      console.log(player2.score);
-    });
-    document.getElementById("passButton").addEventListener("click", function (event) {
-      event.preventDefault();
-      if (currentTurn === "player1") {
-        player1.choice = 'pass';
-        currentTurn = "player2";
-      }
-      else {
-        player2.choice = 'pass';
-        currentTurn = "player1";
-      }
-      if (player1.choice === "pass" && player2.choice === "pass") {
-        endGame(player1, player2);
-      }
-      else {
-        document.getElementById("turn").innerText = `${currentTurn}'s turn`;
-        if (currentTurn === "player1") {
-          document.getElementById("tiles").innerText = `${player1.tiles.toString()}`;
-        }
-        else {
-          document.getElementById("tiles").innerText = `${player2.tiles.toString()}`;
-        }
-      }
-      console.log(player1.score);
-      console.log(player2.score);
-    });
+    const player1 = new Player(0, [], '');
+    const player2 = new Player(0, [], '');
+    player1.drawTiles(tileBag);
+    player2.drawTiles(tileBag);
+    createTilesArray(player1, player2);
+    makeTilesDraggable();
   });
 });

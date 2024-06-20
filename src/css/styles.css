@@ -22,6 +22,8 @@ h1 {
 .box {
   background-color: #d9d9d9;
   border: 2px solid black;
+  font-size: 900;
+  font-size: 2rem;
 }
 
 .box:hover {
@@ -31,4 +33,23 @@ h1 {
 #center-star {
   font-weight: 900;
   font-size: 2rem;
+}
+
+/* player styling  */
+#player-one {
+  float: left;
+}
+
+#player-two {
+  float: right;
+}
+
+.tile {
+  display: grid;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid black;
+  justify-content: space-evenly;
+  font-size: 900;
+  font-size: 1.5rem;
 }
