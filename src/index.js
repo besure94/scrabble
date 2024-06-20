@@ -39,26 +39,26 @@ function createGameBoard() {
   }
 }
 
-function endGame(player1, player2) {
-  const subtractedPlayer1Score = player1.subtractRemainingLetters();
-  const subtractedPlayer2Score = player2.subtractRemainingLetters();
-  if (player1.tiles.length === 0) {
-    player1.score += subtractedPlayer2Score;
-  } else if (player2.tiles.length === 0) {
-    player2.score += subtractedPlayer1Score;
-  }
-  document.querySelector("form").remove();
-  document.getElementById("turn").setAttribute("class", "hidden");
-  if (player1.score > player2.score) {
-    document.getElementById("tiles").innerText = "Player 1 wins";
-  }
-  else if (player2.score > player1.score) {
-    document.getElementById("tiles").innerText = "Player 2 wins";
-  }
-  else {
-    document.getElementById("tiles").innerText = "Draw";
-  }
-}
+// function endGame(player1, player2) {
+//   const subtractedPlayer1Score = player1.subtractRemainingLetters();
+//   const subtractedPlayer2Score = player2.subtractRemainingLetters();
+//   if (player1.tiles.length === 0) {
+//     player1.score += subtractedPlayer2Score;
+//   } else if (player2.tiles.length === 0) {
+//     player2.score += subtractedPlayer1Score;
+//   }
+//   document.querySelector("form").remove();
+//   document.getElementById("turn").setAttribute("class", "hidden");
+//   if (player1.score > player2.score) {
+//     document.getElementById("tiles").innerText = "Player 1 wins";
+//   }
+//   else if (player2.score > player1.score) {
+//     document.getElementById("tiles").innerText = "Player 2 wins";
+//   }
+//   else {
+//     document.getElementById("tiles").innerText = "Draw";
+//   }
+// }
 
 function createTilesArray(playerOne, playerTwo) {
   const player1TilesDiv = document.getElementById("player-one-tiles");
