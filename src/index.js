@@ -100,6 +100,32 @@ function allowTileDrop(event) {
   event.dataTransfer.dropEffect = "move";
 }
 
+function submitWords() {
+  let currentTurnTiles = "";
+  let arrayOfGameBoardBoxes = Array.from(document.querySelectorAll("div.box"));
+  console.log("Game board boxes array: ", arrayOfGameBoardBoxes);
+  console.log("One game board index: ", arrayOfGameBoardBoxes[112].innerHTML);
+
+  // arrayOfGameBoardBoxes.forEach(function(box, index) {
+  //   console.log(box + ", " + index);
+  //   if (arrayOfGameBoardBoxes[index].innerHTML !== "") {
+  //     currentTurnTiles.concat(box[index].innerHTML);
+  //     arrayOfGameBoardBoxes[index].innerHTML = "";
+  //   }
+  // });
+
+  // possibly write another if condition to check for typeof data in innerHTML (check if undefined)
+  
+  for (let i = 0; i <= arrayOfGameBoardBoxes.length; i++) {
+    if (arrayOfGameBoardBoxes[i].innerHTML != "") {
+      console.log(arrayOfGameBoardBoxes[i].innerHTML);
+      // currentTurnTiles.concat(arrayOfGameBoardBoxes[i].innerHTML);
+      currentTurnTiles += arrayOfGameBoardBoxes[i].innerHTML;
+    }
+  }
+  console.log(currentTurnTiles);
+}
+
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
     document.getElementById("start-game").setAttribute("class", "hidden");
@@ -114,5 +140,8 @@ window.addEventListener("load", function() {
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
     makeTilesDraggable();
+    document.querySelector(".play-word").addEventListener("click", submitWords);
   });
 });
+
+// to-do: account for directions of tiles played -- have 'submit word' functionality -- connect business logic to board -- remove placed tile and place back in hand
