@@ -49,15 +49,80 @@ export default class Player {
       case 'z':
         this.score += 10;
         break;
+      case ' ':
+        this.score += 0;
+        break;
       default:
         this.score += 1;
       }
-      this.turn = false;
     });
+    if (wordArray.length === 7) {
+      this.score += 50;
+    }
+    this.turn = false;
+  }
+
+  subtractRemainingLetters() {
+    let subtractedScore = 0;
+    this.tiles.forEach(letter => {
+      switch (letter) {
+      case 'd': 
+      case 'g':
+        this.score -= 2;
+        subtractedScore += 2;
+        break;
+      case 'b': 
+      case 'c':
+      case 'm':
+      case 'p':
+        this.score -= 3;
+        subtractedScore += 3;
+        break;
+      case 'f': 
+      case 'h': 
+      case 'v':
+      case 'w':
+      case 'y':
+        this.score -= 4;
+        subtractedScore += 4;
+        break;
+      case 'k':
+        this.score -= 5;
+        subtractedScore += 5;
+        break;
+      case 'j': 
+      case 'x':
+        this.score -= 8;
+        subtractedScore += 8;
+        break;
+      case 'q': 
+      case 'z':
+        this.score -= 10;
+        subtractedScore += 10;
+        break;
+      default:
+        this.score -= 1;
+        subtractedScore += 1;
+      }
+    });
+    return subtractedScore;
+  }
+
+  exchangeWord(exchangedLetters) {
+    const word = exchangedLetters.toLowerCase();
+    const wordArray = word.split('');
+    wordArray.forEach(letter => {
+      const index = this.tiles.indexOf(letter);
+      this.tiles.splice(index, 1);
+    });
+    this.turn = false;
   }
 
   drawTiles(tileBag) {
     while (this.tiles.length < 7) {
+      if (tileBag.tiles.length === 0) {
+        break;
+      }
       const randomTileIndex = Math.floor(Math.random() * tileBag.tiles.length);
       this.tiles.push(tileBag.tiles[randomTileIndex]);
       tileBag.tiles.splice(randomTileIndex, 1);
