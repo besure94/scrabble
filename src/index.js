@@ -71,8 +71,10 @@ function placeTilesOnBoard(playerTurn) {
   const player2Div = document.getElementById("player-two");
   if (playerTurn === "player1") {
     player2Div.setAttribute("class", "hidden");
+    player1Div.removeAttribute("class");
   } else if (playerTurn === "player2") {
     player1Div.setAttribute("class", "hidden");
+    player2Div.removeAttribute("class");
   }
 }
 
@@ -113,6 +115,15 @@ function submitWords() {
   return currentTurnTiles;
 }
 
+function changeTurn(playerTurn) {
+  if (playerTurn === 'player1') {
+    playerTurn = 'player2';
+  } else {
+    playerTurn = 'player1';
+  }
+  return playerTurn;
+}
+
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
     document.getElementById("start-game").setAttribute("class", "hidden");
@@ -130,12 +141,23 @@ window.addEventListener("load", function() {
     document.getElementById("p1-play-word").addEventListener("click", function() {
       player1.scoreWord(submitWords());
       document.getElementById("p1-score").innerHTML = player1.score;
+      playerTurn = changeTurn(playerTurn);
+      placeTilesOnBoard(playerTurn);
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
       player2.scoreWord(submitWords());
       document.getElementById("p2-score").innerHTML = player2.score;
+      playerTurn = changeTurn(playerTurn);
+      placeTilesOnBoard(playerTurn);
     });
   });
 });
 
+// Known Bugs: 
+// - a player can drop their tiles over tiles that have already been placed, thus replacing them.
+// - submitWords() only works for the first word that is spelled out on the board. 
+
+
 // to-do: account for directions of tiles played -- connect business logic to board -- remove placed tile and place back in hand
+
+// mvp: functional scoring for individual words and turn switching -- exchanging tiles and passing turns
