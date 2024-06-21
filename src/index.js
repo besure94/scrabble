@@ -53,14 +53,14 @@ function createTilesArray(playerOne, playerTwo) {
     player1Tiles.setAttribute("draggable", true);
     player1Tiles.setAttribute("ondragstart", dragTile);
     player1Tiles.setAttribute("id", "tileSetA" + i);
-    player1Tiles.innerHTML = playerOneCurrentTiles.pop();
+    player1Tiles.innerHTML = playerOneCurrentTiles[i];
     player1TilesDiv.appendChild(player1Tiles);
 
     player2Tiles.setAttribute("class", "tile");
     player2Tiles.setAttribute("draggable", true);
     player2Tiles.setAttribute("ondragstart", dragTile);
     player2Tiles.setAttribute("id", "tileSetB" + i);
-    player2Tiles.innerHTML = playerTwoCurrentTiles.pop();
+    player2Tiles.innerHTML = playerTwoCurrentTiles[i];
     player2TilesDiv.appendChild(player2Tiles);
   }
 
@@ -103,27 +103,14 @@ function allowTileDrop(event) {
 function submitWords() {
   let currentTurnTiles = "";
   let arrayOfGameBoardBoxes = Array.from(document.querySelectorAll("div.box"));
-  console.log("Game board boxes array: ", arrayOfGameBoardBoxes);
-  console.log("One game board index: ", arrayOfGameBoardBoxes[112].innerHTML);
-
-  // arrayOfGameBoardBoxes.forEach(function(box, index) {
-  //   console.log(box + ", " + index);
-  //   if (arrayOfGameBoardBoxes[index].innerHTML !== "") {
-  //     currentTurnTiles.concat(box[index].innerHTML);
-  //     arrayOfGameBoardBoxes[index].innerHTML = "";
-  //   }
-  // });
-
-  // possibly write another if condition to check for typeof data in innerHTML (check if undefined)
   
-  for (let i = 0; i <= arrayOfGameBoardBoxes.length; i++) {
-    if (arrayOfGameBoardBoxes[i].innerHTML != "") {
-      console.log(arrayOfGameBoardBoxes[i].innerHTML);
-      // currentTurnTiles.concat(arrayOfGameBoardBoxes[i].innerHTML);
+  for (let i = 0; i <= arrayOfGameBoardBoxes.length - 1; i++) {
+    if (arrayOfGameBoardBoxes[i].innerHTML !== "") {
       currentTurnTiles += arrayOfGameBoardBoxes[i].innerHTML;
     }
   }
-  console.log(currentTurnTiles);
+
+  return currentTurnTiles;
 }
 
 window.addEventListener("load", function() {
@@ -140,8 +127,15 @@ window.addEventListener("load", function() {
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
     makeTilesDraggable();
-    document.querySelector(".play-word").addEventListener("click", submitWords);
+    document.getElementById("p1-play-word").addEventListener("click", function() {
+      player1.scoreWord(submitWords());
+      document.getElementById("p1-score").innerHTML = player1.score;
+    });
+    document.getElementById("p2-play-word").addEventListener("click", function() {
+      player2.scoreWord(submitWords());
+      document.getElementById("p2-score").innerHTML = player2.score;
+    });
   });
 });
 
-// to-do: account for directions of tiles played -- have 'submit word' functionality -- connect business logic to board -- remove placed tile and place back in hand
+// to-do: account for directions of tiles played -- connect business logic to board -- remove placed tile and place back in hand
