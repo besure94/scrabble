@@ -127,6 +127,27 @@ function changeTurn(playerTurn) {
   return playerTurn;
 }
 
+function endGame(player1, player2) {
+  const subtractedPlayer1Score = player1.subtractRemainingLetters();
+  const subtractedPlayer2Score = player2.subtractRemainingLetters();
+  if (player1.tiles.length === 0) {
+    player1.score += subtractedPlayer2Score;
+  } else if (player2.tiles.length === 0) {
+    player2.score += subtractedPlayer1Score;
+  }
+  document.getElementById("player-one").remove();
+  document.getElementById("player-two").remove();
+  if (player1.score > player2.score) {
+    document.getElementById("winner").innerText = "Player 1 wins";
+  }
+  else if (player2.score > player1.score) {
+    document.getElementById("winner").innerText = "Player 2 wins";
+  }
+  else {
+    document.getElementById("winner").innerText = "Draw";
+  }
+}
+
 window.addEventListener("load", function() {
   document.getElementById("start-game").addEventListener("click", function () {
     document.getElementById("start-game").setAttribute("class", "hidden");
@@ -146,12 +167,22 @@ window.addEventListener("load", function() {
       document.getElementById("p1-score").innerHTML = player1.score;
       playerTurn = changeTurn(playerTurn);
       placeTilesOnBoard(playerTurn);
+      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
+        endGame(player1, player2);
+      }
+      tileBag = player1.drawTiles(tileBag);
+      createTilesArray(player1, player2);
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
       player2.scoreWord(submitWords());
       document.getElementById("p2-score").innerHTML = player2.score;
       playerTurn = changeTurn(playerTurn);
       placeTilesOnBoard(playerTurn);
+      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
+        endGame(player1, player2);
+      }
+      tileBag = player2.drawTiles(tileBag);
+      createTilesArray(player1, player2);
     });
   });
 });
