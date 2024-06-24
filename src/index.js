@@ -95,6 +95,8 @@ function dropTile(event) {
   let data = event.dataTransfer.getData("text");
   event.target.appendChild(document.getElementById(data));
   event.target.innerHTML = document.getElementById(data).innerHTML;
+  event.target.classList.add("played-this-turn");
+  event.target.setAttribute("value", event.target.innerHTML);
 }
 
 function allowTileDrop(event) {
@@ -107,8 +109,9 @@ function submitWords() {
   let arrayOfGameBoardBoxes = Array.from(document.querySelectorAll("div.box"));
   
   for (let i = 0; i <= arrayOfGameBoardBoxes.length - 1; i++) {
-    if (arrayOfGameBoardBoxes[i].innerHTML !== "") {
+    if (arrayOfGameBoardBoxes[i].className === "box played-this-turn") {
       currentTurnTiles += arrayOfGameBoardBoxes[i].innerHTML;
+      arrayOfGameBoardBoxes[i].setAttribute("class", "box");
     }
   }
 
