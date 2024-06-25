@@ -63,7 +63,18 @@ function createTilesArray(playerOne, playerTwo) {
     player2Tiles.innerHTML = playerTwoCurrentTiles[i];
     player2TilesDiv.appendChild(player2Tiles);
   }
+  makeTilesDraggable();
+}
 
+function deleteTilesArray() {
+  const player1TilesDiv = document.getElementById("player-one-tiles");
+  const player2TilesDiv = document.getElementById("player-two-tiles");
+  if (player1TilesDiv != null) {
+    player1TilesDiv.innerHTML = '';
+  }
+  if (player2TilesDiv != null) {
+    player2TilesDiv.innerHTML = '';
+  }
 }
 
 function placeTilesOnBoard(playerTurn) {
@@ -161,7 +172,6 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
-    makeTilesDraggable();
     document.getElementById("p1-play-word").addEventListener("click", function() {
       player1.scoreWord(submitWords());
       document.getElementById("p1-score").innerHTML = player1.score;
@@ -171,6 +181,7 @@ window.addEventListener("load", function() {
         endGame(player1, player2);
       }
       tileBag = player1.drawTiles(tileBag);
+      deleteTilesArray();
       createTilesArray(player1, player2);
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
@@ -182,6 +193,7 @@ window.addEventListener("load", function() {
         endGame(player1, player2);
       }
       tileBag = player2.drawTiles(tileBag);
+      deleteTilesArray();
       createTilesArray(player1, player2);
     });
   });

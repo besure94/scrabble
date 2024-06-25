@@ -9,8 +9,6 @@ export default class Player {
     const word = playedWord.toLowerCase();
     const wordArray = word.split('');
     const tiles = this.tiles.slice();
-    console.log(this.tiles);
-    console.log(word);
     wordArray.forEach(letter => {
       if (!this.tiles.includes(letter)) {
         this.tiles = tiles.slice();
