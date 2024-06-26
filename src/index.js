@@ -180,6 +180,7 @@ window.addEventListener("load", function() {
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
     document.getElementById("p1-play-word").addEventListener("click", function() {
+      player1.choice = 'play';
       player1.scoreWord(submitWords());
       document.getElementById("p1-score").innerHTML = player1.score;
       playerTurn = changeTurn(playerTurn);
@@ -193,6 +194,7 @@ window.addEventListener("load", function() {
       }
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
+      player2.choice = 'play';
       player2.scoreWord(submitWords());
       document.getElementById("p2-score").innerHTML = player2.score;
       playerTurn = changeTurn(playerTurn);
@@ -204,6 +206,26 @@ window.addEventListener("load", function() {
         deleteTilesArray();
         createTilesArray(player1, player2);
       }
+    });
+    const passButtons = document.querySelectorAll('.pass');
+    passButtons.forEach(function(currentBtn){
+      currentBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (playerTurn === "player1") {
+          player1.choice = 'pass';
+          playerTurn = "player2";
+        }
+        else {
+          player2.choice = 'pass';
+          playerTurn = "player1";
+        }
+        if (player1.choice === "pass" && player2.choice === "pass") {
+          endGame(player1, player2);
+        }
+        else {
+          placeTilesOnBoard(playerTurn);
+        }
+      });
     });
   });
 });
