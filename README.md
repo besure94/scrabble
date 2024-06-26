@@ -41,11 +41,6 @@
   * Grid that is 15 cells high and 15 cells wide.
   * Horizontal cells go from A - O, left to right.
   * Vertical cells go from 1 - 15, top to bottom.
-  * Certain cells will have score enhancements. There are 4 total:
-    * Triple word
-    * Double word
-    * Double letter
-    * Triple letter
 
 #### Logic to determine who goes first
   * Each player draws a tile.
@@ -74,9 +69,6 @@
 #### First Word Score:
 
   * First player puts their word on the star spin (center cell) in the center of the board.
-  * This star gives a double word score.
-  * Each player has to build their words off of this word.
-  * Need logic that allows players to only place tiles/words that are centered around another word.
 
 #### Replacing Scrabble Tiles:
 
@@ -84,27 +76,10 @@
   * Players always have 7 tiles.
   * Tiles are drawn without looking.
 
-#### Fifty Point Bonus:
-
-  * If a player creates a word with all 7 of their tiles, they receive 50 points in addition to their score from the word.
-  * Only applies to 7 letter words.
-
 #### Game End:
 
   * Once all tiles from the bag are gone, and no players have any tiles remaining, the game ends.
   * Player with highest score wins.
-
-#### Tallying Scores:
-
-  * When game ends, each player counts the points from their remaining tiles that they haven't placed.
-  * Deduct this amount from their final score.
-  * A player who ended game with no remaining tiles receives the score from the other player's remaining tiles.
-  * Highest score wins.
-
-#### Accepted Words:
-
-  * Have an array of valid words hard coded into app.
-  * Array could have 100 words to start.
 
 #### Tile Bag and Point Values
 
@@ -148,33 +123,33 @@
       - Q ×1
       - Z ×1
 
-  * Object will have a nested object for each letter. Each nested object will have key-value pairs for the quantity of each letter, and the point value of the letter.
-
-#### Score Modifying Tiles
-
-  * Have an object for the score modifying tiles.
-  * Object contains two nested objects, one for "double" and one for "triple".
-  * Each nested object has a key-value pair, one for "2" and one for "3".
-  * Double letter: score value of tile(s), multiply by 2
-  * Triple letter: score value of tile(s), multiply by 3
-  * Double word: score value of word, multiply by 2
-  * Triple word: score value of word, multiply by 3
-
 #### Player Objects
 
   * have property for player's score
   * property for player's number of tiles
-  * property for player turn
-  * property for the first tile each player draws to determine who goes first
   * property for player choice, since they can choose to place tiles, exchange, or pass
 
 ### Stretch Goals
 
+#### Score Modifying Tiles
+
+* Certain cells will have score enhancements. There are 4 total:
+  * Double letter: score value of tile(s), multiply by 2
+  * Triple letter: score value of tile(s), multiply by 3
+  * Double word: score value of word, multiply by 2
+  * Triple word: score value of word, multiply by 3
+      
+* Each player has to build their words off of the first played word.
+* Need logic that allows players to only place tiles/words that are centered around another word.
+* If a player creates a word with all 7 of their tiles, they receive 50 points in addition to their score from the word.
+* Only applies to 7 letter words.
+* Have an array of valid words hard coded into app.
+* Array could have 100 words to start.
+
+* When game ends, each player counts the points from their remaining tiles that they haven't placed.
+  * Deduct this amount from their final score.
+  * A player who ended game with no remaining tiles receives the score from the other player's remaining tiles.
+  * Highest score wins.
+
 * Expand game to allow 3 or 4 players.
-* Implement Wordnik API to validate Scrabble words.
 * CSS Animations
-* Build computer opponent.
-
-
-
-
