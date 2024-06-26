@@ -47,23 +47,41 @@ function createTilesArray(playerOne, playerTwo) {
   let playerTwoCurrentTiles = playerTwo.tiles;
 
   for (let i = 0; i < tilesPerPlayer; i++) {
+    if (typeof playerOneCurrentTiles[i] === 'undefined') {
+      break;
+    }
     let player1Tiles = document.createElement("div");
-    let player2Tiles = document.createElement("div");
     player1Tiles.setAttribute("class", "tile");
     player1Tiles.setAttribute("draggable", true);
     player1Tiles.setAttribute("ondragstart", dragTile);
     player1Tiles.setAttribute("id", "tileSetA" + i);
-    player1Tiles.innerHTML = playerOneCurrentTiles.pop();
+    player1Tiles.innerHTML = playerOneCurrentTiles[i];
     player1TilesDiv.appendChild(player1Tiles);
-
+  }
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    if (typeof playerTwoCurrentTiles[i] === 'undefined') {
+      break;
+    }
+    let player2Tiles = document.createElement("div");
     player2Tiles.setAttribute("class", "tile");
     player2Tiles.setAttribute("draggable", true);
     player2Tiles.setAttribute("ondragstart", dragTile);
     player2Tiles.setAttribute("id", "tileSetB" + i);
-    player2Tiles.innerHTML = playerTwoCurrentTiles.pop();
+    player2Tiles.innerHTML = playerTwoCurrentTiles[i];
     player2TilesDiv.appendChild(player2Tiles);
   }
+  makeTilesDraggable();
+}
 
+function deleteTilesArray() {
+  const player1TilesDiv = document.getElementById("player-one-tiles");
+  const player2TilesDiv = document.getElementById("player-two-tiles");
+  if (player1TilesDiv != null) {
+    player1TilesDiv.innerHTML = '';
+  }
+  if (player2TilesDiv != null) {
+    player2TilesDiv.innerHTML = '';
+  }
 }
 
 function placeTilesOnBoard(playerTurn) {
@@ -71,8 +89,10 @@ function placeTilesOnBoard(playerTurn) {
   const player2Div = document.getElementById("player-two");
   if (playerTurn === "player1") {
     player2Div.setAttribute("class", "hidden");
+    player1Div.removeAttribute("class");
   } else if (playerTurn === "player2") {
     player1Div.setAttribute("class", "hidden");
+    player2Div.removeAttribute("class");
   }
 }
 
@@ -93,11 +113,57 @@ function dropTile(event) {
   let data = event.dataTransfer.getData("text");
   event.target.appendChild(document.getElementById(data));
   event.target.innerHTML = document.getElementById(data).innerHTML;
+  event.target.classList.add("played-this-turn");
+  event.target.setAttribute("value", event.target.innerHTML);
 }
 
 function allowTileDrop(event) {
   event.preventDefault();
   event.dataTransfer.dropEffect = "move";
+}
+
+function submitWords() {
+  let currentTurnTiles = "";
+  let arrayOfGameBoardBoxes = Array.from(document.querySelectorAll("div.box"));
+  
+  for (let i = 0; i <= arrayOfGameBoardBoxes.length - 1; i++) {
+    if (arrayOfGameBoardBoxes[i].className === "box played-this-turn") {
+      currentTurnTiles += arrayOfGameBoardBoxes[i].innerHTML;
+      arrayOfGameBoardBoxes[i].setAttribute("class", "box");
+    }
+  }
+
+  return currentTurnTiles;
+}
+
+function changeTurn(playerTurn) {
+  if (playerTurn === 'player1') {
+    playerTurn = 'player2';
+  } else {
+    playerTurn = 'player1';
+  }
+  return playerTurn;
+}
+
+function endGame(player1, player2) {
+  const subtractedPlayer1Score = player1.subtractRemainingLetters();
+  const subtractedPlayer2Score = player2.subtractRemainingLetters();
+  if (player1.tiles.length === 0) {
+    player1.score += subtractedPlayer2Score;
+  } else if (player2.tiles.length === 0) {
+    player2.score += subtractedPlayer1Score;
+  }
+  document.getElementById("player-one").remove();
+  document.getElementById("player-two").remove();
+  if (player1.score > player2.score) {
+    document.getElementById("winner").innerText = "Player 1 wins";
+  }
+  else if (player2.score > player1.score) {
+    document.getElementById("winner").innerText = "Player 2 wins";
+  }
+  else {
+    document.getElementById("winner").innerText = "Draw";
+  }
 }
 
 window.addEventListener("load", function() {
@@ -113,9 +179,45 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
-    makeTilesDraggable();
+    document.getElementById("p1-play-word").addEventListener("click", function() {
+      player1.scoreWord(submitWords());
+      document.getElementById("p1-score").innerHTML = player1.score;
+      playerTurn = changeTurn(playerTurn);
+      placeTilesOnBoard(playerTurn);
+      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
+        endGame(player1, player2);
+      } else {
+        tileBag = player1.drawTiles(tileBag);
+        deleteTilesArray();
+        createTilesArray(player1, player2);
+      }
+    });
+    document.getElementById("p2-play-word").addEventListener("click", function() {
+      player2.scoreWord(submitWords());
+      document.getElementById("p2-score").innerHTML = player2.score;
+      playerTurn = changeTurn(playerTurn);
+      placeTilesOnBoard(playerTurn);
+      if (player1.tiles.length === 0 && player2.tiles.length === 0) {
+        endGame(player1, player2);
+      } else {
+        tileBag = player2.drawTiles(tileBag);
+        deleteTilesArray();
+        createTilesArray(player1, player2);
+      }
+    });
   });
 });
+
+// Known Bugs: 
+// - a player can drop their tiles over tiles that have already been placed, thus replacing them.
+// - submitWords() only works for the first word that is spelled out on the board. 
+
+
+// to-do: account for directions of tiles played -- connect business logic to board -- remove placed tile and place back in hand
+
+// mvp: functional scoring for individual words and turn switching -- exchanging tiles and passing turns
+
+
 
 // function endGame(player1, player2) {
 //   const subtractedPlayer1Score = player1.subtractRemainingLetters();
