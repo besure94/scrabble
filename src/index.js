@@ -47,15 +47,22 @@ function createTilesArray(playerOne, playerTwo) {
   let playerTwoCurrentTiles = playerTwo.tiles;
 
   for (let i = 0; i < tilesPerPlayer; i++) {
+    if (typeof playerOneCurrentTiles[i] === 'undefined') {
+      break;
+    }
     let player1Tiles = document.createElement("div");
-    let player2Tiles = document.createElement("div");
     player1Tiles.setAttribute("class", "tile");
     player1Tiles.setAttribute("draggable", true);
     player1Tiles.setAttribute("ondragstart", dragTile);
     player1Tiles.setAttribute("id", "tileSetA" + i);
     player1Tiles.innerHTML = playerOneCurrentTiles[i];
     player1TilesDiv.appendChild(player1Tiles);
-
+  }
+  for (let i = 0; i < tilesPerPlayer; i++) {
+    if (typeof playerTwoCurrentTiles[i] === 'undefined') {
+      break;
+    }
+    let player2Tiles = document.createElement("div");
     player2Tiles.setAttribute("class", "tile");
     player2Tiles.setAttribute("draggable", true);
     player2Tiles.setAttribute("ondragstart", dragTile);
@@ -179,10 +186,11 @@ window.addEventListener("load", function() {
       placeTilesOnBoard(playerTurn);
       if (player1.tiles.length === 0 && player2.tiles.length === 0) {
         endGame(player1, player2);
+      } else {
+        tileBag = player1.drawTiles(tileBag);
+        deleteTilesArray();
+        createTilesArray(player1, player2);
       }
-      tileBag = player1.drawTiles(tileBag);
-      deleteTilesArray();
-      createTilesArray(player1, player2);
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
       player2.scoreWord(submitWords());
@@ -191,10 +199,11 @@ window.addEventListener("load", function() {
       placeTilesOnBoard(playerTurn);
       if (player1.tiles.length === 0 && player2.tiles.length === 0) {
         endGame(player1, player2);
+      } else {
+        tileBag = player2.drawTiles(tileBag);
+        deleteTilesArray();
+        createTilesArray(player1, player2);
       }
-      tileBag = player2.drawTiles(tileBag);
-      deleteTilesArray();
-      createTilesArray(player1, player2);
     });
   });
 });
