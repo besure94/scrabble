@@ -13,19 +13,28 @@
         <div>Player 2's score: <span id="p2-score"></span></div>
         <div id="winner"></div>
         <br>
+        <br>
         <div id="player-one">
           <p>Player One</p>
           <div id="player-one-tiles"></div>
           <button type="submit" id="p1-play-word">Play</button>
-          <button type="submit" id="p1-exchange-tiles">Exchange</button>
           <button type="submit" class="pass">Pass</button>
+          <form>
+            <input id="player-one-exchanged-word">
+            <button type="submit" class="exchange">Exchange</button>
+          </form>
         </div>
         <div id="player-two">
           <p>Player Two</p>
           <div id="player-two-tiles"></div>
           <button type="submit" id="p2-play-word">Play</button>
-          <button type="submit" id="p2-exchange-tiles">Exchange</button>
           <button type="submit" class="pass">Pass</button>
+          <br>
+          <br>
+          <form>
+            <input id="player-two-exchanged-word">
+            <button type="submit" class="exchange">Exchange</button>
+          </form>
         </div>
       </div>
     </div>

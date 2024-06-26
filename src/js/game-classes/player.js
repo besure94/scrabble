@@ -59,7 +59,6 @@ export default class Player {
     if (wordArray.length === 7) {
       this.score += 50;
     }
-    this.turn = false;
   }
 
   subtractRemainingLetters() {
@@ -115,7 +114,6 @@ export default class Player {
       const index = this.tiles.indexOf(letter);
       this.tiles.splice(index, 1);
     });
-    this.turn = false;
   }
 
   drawTiles(tileBag) {
