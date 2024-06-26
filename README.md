@@ -1,4 +1,4 @@
-# Scrabble
+# Word Game
 
 #### Use this template repository for starting new projects. Update with new technologies and packages when necessary.
 
