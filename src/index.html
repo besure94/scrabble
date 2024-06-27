@@ -6,7 +6,7 @@
   <body>
     <div class="container">
       <h1>Word Game</h1>
-      <button id="start-game" type="submit">Start Game</button>
+      <button id="start-game" type="submit" class="btn btn-primary">Start Game</button>
       <div class="hidden" id="game-div">
         <div class="game-board" id="gameBoard"></div>
         <div>Player 1's score: <span id="p1-score"></span></div>
@@ -17,23 +17,27 @@
         <div id="player-one">
           <p>Player One</p>
           <div id="player-one-tiles"></div>
-          <button type="submit" id="p1-play-word">Play</button>
-          <button type="submit" class="pass">Pass</button>
+          <br>
+          <br>
+          <button type="submit" id="p1-play-word" class="btn btn-primary">Play</button>
+          <button type="submit" class="pass btn btn-danger">Pass</button>
+          <br>
           <form>
-            <input id="player-one-exchanged-word">
-            <button type="submit" class="exchange">Exchange</button>
+            <input id="player-one-exchanged-word" class="form-control">
+            <button type="submit" class="exchange btn btn-success">Exchange</button>
           </form>
         </div>
         <div id="player-two">
           <p>Player Two</p>
           <div id="player-two-tiles"></div>
-          <button type="submit" id="p2-play-word">Play</button>
-          <button type="submit" class="pass">Pass</button>
           <br>
+          <br>
+          <button type="submit" id="p2-play-word" class="btn btn-primary">Play</button>
+          <button type="submit" class="pass btn btn-danger">Pass</button>
           <br>
           <form>
-            <input id="player-two-exchanged-word">
-            <button type="submit" class="exchange">Exchange</button>
+            <input id="player-two-exchanged-word" class="form-control">
+            <button type="submit" class="exchange btn btn-success">Exchange</button>
           </form>
         </div>
       </div>

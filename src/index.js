@@ -157,11 +157,9 @@ function endGame(player1, player2) {
   document.getElementById("player-two").remove();
   if (player1.score > player2.score) {
     document.getElementById("winner").innerText = "Player 1 wins";
-  }
-  else if (player2.score > player1.score) {
+  } else if (player2.score > player1.score) {
     document.getElementById("winner").innerText = "Player 2 wins";
-  }
-  else {
+  } else {
     document.getElementById("winner").innerText = "Draw";
   }
 }
@@ -232,15 +230,13 @@ window.addEventListener("load", function() {
         if (playerTurn === "player1") {
           player1.choice = 'pass';
           playerTurn = "player2";
-        }
-        else {
+        } else {
           player2.choice = 'pass';
           playerTurn = "player1";
         }
         if (player1.choice === "pass" && player2.choice === "pass") {
           endGame(player1, player2);
-        }
-        else {
+        } else {
           placeTilesOnBoard(playerTurn);
         }
       });
@@ -256,8 +252,7 @@ window.addEventListener("load", function() {
           tileBag = player1.drawTiles(tileBag);
           playerTurn = "player2";
           document.getElementById("player-one-exchanged-word").value = '';
-        }
-        else {
+        } else {
           player2.choice = 'exchange';
           const exchangedTiles = document.getElementById("player-two-exchanged-word").value;
           tileBag = player2.exchangeTiles(exchangedTiles, tileBag);
