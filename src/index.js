@@ -90,25 +90,25 @@ function placeTilesOnBoard(playerTurn) {
   if (playerTurn === "player1") {
     player2Div.setAttribute("class", "hidden");
     player1Div.removeAttribute("class");
-    // document.querySelector('#player-one-tiles')
-    //   .addEventListener('click', event => {
-    //     let target = event.target;
-    //     if (target.matches('.tile')) {
-    //       let value = target.innerHTML;
+    document.querySelector('#player-one-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
           
-    //       document.querySelector('#player-one-exchanged-word').value += value;
-    //     }
-    //   });
+          document.querySelector('#player-one-exchanged-word').value += value;
+        }
+      });
   } else if (playerTurn === "player2") {
-    // document.querySelector('#player-two-tiles')
-    //   .addEventListener('click', event => {
-    //     let target = event.target;
-    //     if (target.matches('.tile')) {
-    //       let value = target.innerHTML;
+    document.querySelector('#player-two-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
       
-    //       document.querySelector('#player-two-exchanged-word').value += value;
-    //     }
-    //   });
+          document.querySelector('#player-two-exchanged-word').value += value;
+        }
+      });
     player1Div.setAttribute("class", "hidden");
     player2Div.removeAttribute("class");
   }
@@ -255,6 +255,7 @@ window.addEventListener("load", function() {
           player1.exchangeWord(playedWord);
           tileBag = player1.drawTiles(tileBag);
           playerTurn = "player2";
+          document.getElementById("player-one-exchanged-word").value = '';
         }
         else {
           player2.choice = 'exchange';
@@ -263,6 +264,7 @@ window.addEventListener("load", function() {
           player2.exchangeWord(playedWord);
           tileBag = player2.drawTiles(tileBag);
           playerTurn = "player1";
+          document.getElementById("player-two-exchanged-word").value = '';
         }
         deleteTilesArray();
         createTilesArray(player1, player2);
