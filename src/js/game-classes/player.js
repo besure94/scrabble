@@ -107,13 +107,15 @@ export default class Player {
     return subtractedScore;
   }
 
-  exchangeWord(exchangedLetters) {
+  exchangeTiles(exchangedLetters, tileBag) {
     const word = exchangedLetters.toLowerCase();
     const wordArray = word.split('');
     wordArray.forEach(letter => {
       const index = this.tiles.indexOf(letter);
       this.tiles.splice(index, 1);
+      tileBag.tiles.push(letter); 
     });
+    return tileBag;
   }
 
   drawTiles(tileBag) {

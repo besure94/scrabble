@@ -90,25 +90,7 @@ function placeTilesOnBoard(playerTurn) {
   if (playerTurn === "player1") {
     player2Div.setAttribute("class", "hidden");
     player1Div.removeAttribute("class");
-    document.querySelector('#player-one-tiles')
-      .addEventListener('click', event => {
-        let target = event.target;
-        if (target.matches('.tile')) {
-          let value = target.innerHTML;
-          
-          document.querySelector('#player-one-exchanged-word').value += value;
-        }
-      });
   } else if (playerTurn === "player2") {
-    document.querySelector('#player-two-tiles')
-      .addEventListener('click', event => {
-        let target = event.target;
-        if (target.matches('.tile')) {
-          let value = target.innerHTML;
-      
-          document.querySelector('#player-two-exchanged-word').value += value;
-        }
-      });
     player1Div.setAttribute("class", "hidden");
     player2Div.removeAttribute("class");
   }
@@ -197,6 +179,24 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
+    document.querySelector('#player-one-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
+          
+          document.querySelector('#player-one-exchanged-word').value += value;
+        }
+      });
+    document.querySelector('#player-two-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
+      
+          document.querySelector('#player-two-exchanged-word').value += value;
+        }
+      });
     document.getElementById("p1-play-word").addEventListener("click", function() {
       player1.choice = 'play';
       player1.scoreWord(submitWords());
@@ -251,17 +251,16 @@ window.addEventListener("load", function() {
         event.preventDefault();
         if (playerTurn === "player1") {
           player1.choice = 'exchange';
-          const playedWord = document.getElementById("player-one-exchanged-word").value;
-          player1.exchangeWord(playedWord);
+          const exchangedTiles = document.getElementById("player-one-exchanged-word").value;
+          tileBag = player1.exchangeTiles(exchangedTiles, tileBag);
           tileBag = player1.drawTiles(tileBag);
           playerTurn = "player2";
           document.getElementById("player-one-exchanged-word").value = '';
         }
         else {
           player2.choice = 'exchange';
-          const playedWord = document.getElementById("player-two-exchanged-word").value;
-          console.log(playedWord);
-          player2.exchangeWord(playedWord);
+          const exchangedTiles = document.getElementById("player-two-exchanged-word").value;
+          tileBag = player2.exchangeTiles(exchangedTiles, tileBag);
           tileBag = player2.drawTiles(tileBag);
           playerTurn = "player1";
           document.getElementById("player-two-exchanged-word").value = '';
