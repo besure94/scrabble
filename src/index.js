@@ -179,7 +179,26 @@ window.addEventListener("load", function() {
     player1.drawTiles(tileBag);
     player2.drawTiles(tileBag);
     createTilesArray(player1, player2);
+    document.querySelector('#player-one-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
+          
+          document.querySelector('#player-one-exchanged-word').value += value;
+        }
+      });
+    document.querySelector('#player-two-tiles')
+      .addEventListener('click', event => {
+        let target = event.target;
+        if (target.matches('.tile')) {
+          let value = target.innerHTML;
+      
+          document.querySelector('#player-two-exchanged-word').value += value;
+        }
+      });
     document.getElementById("p1-play-word").addEventListener("click", function() {
+      player1.choice = 'play';
       player1.scoreWord(submitWords());
       document.getElementById("p1-score").innerHTML = player1.score;
       playerTurn = changeTurn(playerTurn);
@@ -193,6 +212,7 @@ window.addEventListener("load", function() {
       }
     });
     document.getElementById("p2-play-word").addEventListener("click", function() {
+      player2.choice = 'play';
       player2.scoreWord(submitWords());
       document.getElementById("p2-score").innerHTML = player2.score;
       playerTurn = changeTurn(playerTurn);
@@ -204,6 +224,51 @@ window.addEventListener("load", function() {
         deleteTilesArray();
         createTilesArray(player1, player2);
       }
+    });
+    const passButtons = document.querySelectorAll('.pass');
+    passButtons.forEach(function(currentBtn){
+      currentBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (playerTurn === "player1") {
+          player1.choice = 'pass';
+          playerTurn = "player2";
+        }
+        else {
+          player2.choice = 'pass';
+          playerTurn = "player1";
+        }
+        if (player1.choice === "pass" && player2.choice === "pass") {
+          endGame(player1, player2);
+        }
+        else {
+          placeTilesOnBoard(playerTurn);
+        }
+      });
+    });
+    const exchangeButtons = document.querySelectorAll('.exchange');
+    exchangeButtons.forEach(function(currentBtn){
+      currentBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (playerTurn === "player1") {
+          player1.choice = 'exchange';
+          const exchangedTiles = document.getElementById("player-one-exchanged-word").value;
+          tileBag = player1.exchangeTiles(exchangedTiles, tileBag);
+          tileBag = player1.drawTiles(tileBag);
+          playerTurn = "player2";
+          document.getElementById("player-one-exchanged-word").value = '';
+        }
+        else {
+          player2.choice = 'exchange';
+          const exchangedTiles = document.getElementById("player-two-exchanged-word").value;
+          tileBag = player2.exchangeTiles(exchangedTiles, tileBag);
+          tileBag = player2.drawTiles(tileBag);
+          playerTurn = "player1";
+          document.getElementById("player-two-exchanged-word").value = '';
+        }
+        deleteTilesArray();
+        createTilesArray(player1, player2);
+        placeTilesOnBoard(playerTurn);
+      });
     });
   });
 });
