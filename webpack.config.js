@@ -20,7 +20,7 @@ module.exports = {
 			verbose: true
 		}),
     new HtmlWebpackPlugin({
-      title: 'Scrabble',
+      title: 'Word Game',
       template: './src/index.html',
       inject: 'body'
     }),

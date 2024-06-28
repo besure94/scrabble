@@ -1,8 +1,8 @@
 # Word Game
 
-#### Use this template repository for starting new projects. Update with new technologies and packages when necessary.
+#### A two-player game similar to Scrabble, where users take turns spelling words to get the highest possible score.
 
-#### By (Your Name Here)
+#### By Aidan Williams, Brian Scherner, India Lyon-Myrick
 
 ## Technologies Used
 
@@ -12,144 +12,33 @@
 * JavaScript
 * Webpack
 * Node Package Manager
-* Jest
 
 ## Description
 
+A user selects `Start Game`, which loads the game board. The first player's turn is randomly determined. They have the option to `Play`, `Pass`, or `Exchange`. To `Play`, they drag and drop their tiles onto individual boxes on the game board. When they are happy with their decision, they select `Play`, which calculates their score for that round. Selecting `Pass` will forfeit their current turn. The user exchanges tiles by clicking on the tile(s) they wish to exchange, and then clicking `Exchange`. The turn will then switch to the other player after one of these three actions is chosen.
+
+If both users select `Pass` for their turns, the game ends. Each player's remaining tiles are calculated, and this score is deducted from their final score. The game also ends if there are no remaining tiles. The player with the highest score wins.
+
 ## Setup/Installation Requirements
 
-* Select the green "Use this template" button and select "create a new repository".
-* In the terminal, go to your project folder and run the command `$ npm install` to install node_modules.
+* Select the green `Code` button and clone this repository to your desktop.
+* In your terminal, go to your project folder and run the command `$ npm install` to install node_modules.
 * Run the command `$ npm run build` to bundle together JS files.
 * Enter the command `$ npm run start` to start a live development server.
 * Enter the command `$ npm run lint` to check for errors.
 
 ## Known Bugs
 
-* _Any known issues_
-* _should go here_
+* There is no functionality to control which direction users can spell their words. For example, a user can place tiles diagonally or to the left.
+* A user can place tiles wherever they want, without placing their tiles side by side to spell a proper word.
+* A user can drop a tile on top of an existing tile.
+* If a user drops a tile in a place that they want to change, they can't move it somewhere else.
+* A user can select `Play` without putting any tiles down.
+* A user can select `Exchange` without exchanging any tiles.
+* There is no functionality to validate a word.
 
 ## License
 
---------------------------------------------------------------------------------------------------------------------
+MIT
 
-### Outline for MVP
-
-#### 2 player game
-
-#### Build basic game board
-  * Grid that is 15 cells high and 15 cells wide.
-  * Horizontal cells go from A - O, left to right.
-  * Vertical cells go from 1 - 15, top to bottom.
-
-#### Logic to determine who goes first
-  * Each player draws a tile.
-  * Player with tile closest to "A" begins the game.
-  * If player draws a blank tile, they automatically go first.
-  * Each initial drawn tile goes back into the tiles object (bag).
-
-#### Player turn logic
-  * Each player initially draws 7 tiles.
-  * Player can use up to 7 tiles for a turn.
-  * Player then replaces the amount of tiles they used from the bag.
-
-  Player has three options for their turn:
-    1. Place a word.
-    2. Exchange tiles.
-    3. Pass.
-
-  Exchange process:
-    * Can exchange one or all of their tiles.
-    * Turn ends after the exchange.
-
-  Pass process:
-    * Forfeits turn.
-    * 2 consecutive passes ends game, and the highest score wins.
-
-#### First Word Score:
-
-  * First player puts their word on the star spin (center cell) in the center of the board.
-
-#### Replacing Scrabble Tiles:
-
-  * After each player places tiles on the board, they will draw tiles to replace the amount they placed.
-  * Players always have 7 tiles.
-  * Tiles are drawn without looking.
-
-#### Game End:
-
-  * Once all tiles from the bag are gone, and no players have any tiles remaining, the game ends.
-  * Player with highest score wins.
-
-#### Tile Bag and Point Values
-
-  * Store as object that contains 100 tiles.
-  * 98 will be letters with different point values.
-  * 2 will be empty, which can take the place of any letter when placed by player.
-
-  Tiles will be distributed as:
-    * 2 blank tiles (scoring 0 points)
-    * 1 point:
-      - E ×12
-      - A ×9
-      - I ×9
-      - O ×8
-      - N ×6
-      - R ×6
-      - T ×6
-      - L ×4
-      - S ×4
-      - U ×4
-    * 2 points:
-      - D ×4
-      - G ×3
-    * 3 points:
-      - B ×2
-      - C ×2
-      - M ×2
-      - P ×2
-    * 4 points:
-      - F ×2
-      - H ×2
-      - V ×2
-      - W ×2
-      - Y ×2
-    * 5 points:
-      - K ×1
-    * 8 points:
-      - J ×1
-      - X ×1
-    * 10 points:
-      - Q ×1
-      - Z ×1
-
-#### Player Objects
-
-  * have property for player's score
-  * property for player's number of tiles
-  * property for player choice, since they can choose to place tiles, exchange, or pass
-
-### Stretch Goals
-
-#### Score Modifying Tiles
-
-* Certain cells will have score enhancements. There are 4 total:
-  * Double letter: score value of tile(s), multiply by 2
-  * Triple letter: score value of tile(s), multiply by 3
-  * Double word: score value of word, multiply by 2
-  * Triple word: score value of word, multiply by 3
-      
-* Each player has to build their words off of the first played word.
-* Need logic that allows players to only place tiles/words that are centered around another word.
-* If a player creates a word with all 7 of their tiles, they receive 50 points in addition to their score from the word.
-* Only applies to 7 letter words.
-* Have an array of valid words hard coded into app.
-* Array could have 100 words to start.
-
-* When game ends, each player counts the points from their remaining tiles that they haven't placed.
-  * Deduct this amount from their final score.
-  * A player who ended game with no remaining tiles receives the score from the other player's remaining tiles.
-  * Highest score wins.
-
-* Expand game to allow 3 or 4 players.
-* CSS Animations
+Copyright(c) 2024 Aidan Williams, Brian Scherner, India Lyon-Myrick
