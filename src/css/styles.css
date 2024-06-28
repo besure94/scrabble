@@ -52,4 +52,39 @@ h1 {
   justify-content: space-evenly;
   font-size: 900;
   font-size: 1.5rem;
+  float: left;
+}
+
+.btn.btn-primary {
+  width: 42%;
+}
+
+.btn.btn-danger {
+  width: 42%;
+}
+
+.btn.btn-success {
+  width: 37.5%;
+}
+
+.form-control {
+  text-align: center;
+  display: flex;
+  width: 37.5%;
+}
+
+.form {
+  text-align: center;
+}
+
+.players {
+  font-size: 1.5rem;
+}
+
+.scores {
+  font-size: 1.75rem;
+}
+
+#winner {
+  font-size: 1.5rem;
 }
