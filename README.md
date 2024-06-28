@@ -34,7 +34,6 @@ If both users select `Pass` for their turns, the game ends. Each player's remain
 * A user can drop a tile on top of an existing tile.
 * If a user drops a tile in a place that they want to change, they can't move it somewhere else.
 * A user can select `Play` without putting any tiles down.
-* A user can select `Exchange` without exchanging any tiles.
 * There is no functionality to validate a word.
 
 ## License
