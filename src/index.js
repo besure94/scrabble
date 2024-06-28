@@ -156,6 +156,8 @@ function endGame(player1, player2) {
   }
   document.getElementById("player-one").remove();
   document.getElementById("player-two").remove();
+  document.getElementById("p1-score").innerHTML = player1.score;
+  document.getElementById("p2-score").innerHTML = player2.score;
   if (player1.score > player2.score) {
     document.getElementById("winner").innerText = "Player 1 wins";
   } else if (player2.score > player1.score) {
@@ -265,4 +267,3 @@ window.addEventListener("load", function() {
       });
     });
   });
-});
