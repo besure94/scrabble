@@ -9,36 +9,44 @@
       <button id="start-game" type="submit" class="btn btn-primary">Start Game</button>
       <div class="hidden" id="game-div">
         <div class="game-board" id="gameBoard"></div>
-        <div>Player 1's score: <span id="p1-score"></span></div>
-        <div>Player 2's score: <span id="p2-score"></span></div>
+        <div class="scores">Player 1's score: <span id="p1-score"></span></div>
+        <div class="scores">Player 2's score: <span id="p2-score"></span></div>
         <div id="winner"></div>
         <br>
         <br>
         <div id="player-one">
-          <p>Player One</p>
+          <p class="players">Player One</p>
           <div id="player-one-tiles"></div>
           <br>
           <br>
           <button type="submit" id="p1-play-word" class="btn btn-primary">Play</button>
           <button type="submit" class="pass btn btn-danger">Pass</button>
           <br>
-          <form>
-            <input id="player-one-exchanged-word" class="form-control">
-            <button type="submit" class="exchange btn btn-success">Exchange</button>
-          </form>
+          <div class="form">
+            <form>
+              <div class="row justify-content-center">
+                <input id="player-one-exchanged-word" class="form-control">
+                <button type="submit" class="exchange btn btn-success">Exchange</button>
+              </div>
+            </form>
+          </div>
         </div>
         <div id="player-two">
-          <p>Player Two</p>
+          <p class="players">Player Two</p>
           <div id="player-two-tiles"></div>
           <br>
           <br>
           <button type="submit" id="p2-play-word" class="btn btn-primary">Play</button>
           <button type="submit" class="pass btn btn-danger">Pass</button>
           <br>
-          <form>
-            <input id="player-two-exchanged-word" class="form-control">
-            <button type="submit" class="exchange btn btn-success">Exchange</button>
-          </form>
+          <div class="form">
+            <form>
+              <div class="row justify-content-center">
+                <input id="player-two-exchanged-word" class="form-control">
+                <button type="submit" class="exchange btn btn-success">Exchange</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

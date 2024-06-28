@@ -58,6 +58,7 @@ function createTilesArray(playerOne, playerTwo) {
     player1Tiles.innerHTML = playerOneCurrentTiles[i];
     player1TilesDiv.appendChild(player1Tiles);
   }
+  
   for (let i = 0; i < tilesPerPlayer; i++) {
     if (typeof playerTwoCurrentTiles[i] === 'undefined') {
       break;
@@ -182,7 +183,6 @@ window.addEventListener("load", function() {
         let target = event.target;
         if (target.matches('.tile')) {
           let value = target.innerHTML;
-          
           document.querySelector('#player-one-exchanged-word').value += value;
         }
       });
@@ -191,7 +191,6 @@ window.addEventListener("load", function() {
         let target = event.target;
         if (target.matches('.tile')) {
           let value = target.innerHTML;
-      
           document.querySelector('#player-two-exchanged-word').value += value;
         }
       });
@@ -267,6 +266,3 @@ window.addEventListener("load", function() {
     });
   });
 });
-
-// Known Bugs: 
-// - a player can drop their tiles over tiles that have already been placed, thus replacing them.
