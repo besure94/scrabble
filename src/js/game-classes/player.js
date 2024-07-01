@@ -112,8 +112,10 @@ export default class Player {
     const wordArray = word.split('');
     wordArray.forEach(letter => {
       const index = this.tiles.indexOf(letter);
-      this.tiles.splice(index, 1);
-      tileBag.tiles.push(letter); 
+      if (index != -1) {
+        this.tiles.splice(index, 1);
+        tileBag.tiles.push(letter); 
+      }
     });
     return tileBag;
   }

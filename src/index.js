@@ -226,8 +226,7 @@ window.addEventListener("load", function() {
     });
     const passButtons = document.querySelectorAll('.pass');
     passButtons.forEach(function(currentBtn){
-      currentBtn.addEventListener('click', function(event) {
-        event.preventDefault();
+      currentBtn.addEventListener('click', function() {
         if (playerTurn === "player1") {
           player1.choice = 'pass';
           playerTurn = "player2";
@@ -242,9 +241,9 @@ window.addEventListener("load", function() {
         }
       });
     });
-    const exchangeButtons = document.querySelectorAll('.exchange');
-    exchangeButtons.forEach(function(currentBtn){
-      currentBtn.addEventListener('click', function(event) {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(function(form){
+      form.addEventListener('submit', function(event) {
         event.preventDefault();
         if (playerTurn === "player1") {
           player1.choice = 'exchange';
